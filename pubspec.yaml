@@ -1,0 +1,27 @@
+name: untitled
+description: "A new Flutter project."
+publish_to: 'none' # No publicar en pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.2.3 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  image_picker: ^0.8.4+4
+  pdf: ^3.6.0
+  path_provider: ^2.0.8
+  permission_handler: ^8.3.0
+  cupertino_icons: ^1.0.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
+
+  # Define aquí tus assets y fuentes personalizadas si es necesario
