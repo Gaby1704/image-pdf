@@ -20,8 +20,8 @@ class _FotoAPdfAppState extends State<FotoAPdfApp> {
   final picker = ImagePicker();
   Uint8List? _imagenWeb;
 
-  Future getImage() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+  Future getImage(ImageSource source) async {
+    final pickedFile = await picker.pickImage(source: source);
 
     if (pickedFile != null) {
       Uint8List bytes = await pickedFile.readAsBytes();
@@ -44,13 +44,9 @@ class _FotoAPdfAppState extends State<FotoAPdfApp> {
 
     try {
       final directory = await getExternalStorageDirectory();
-      print('pruebas');
       final file = File("${directory!.path}/DocumetosAcuses/imagen.pdf");
-      print('pruebass1');
       await file.create(recursive: true);
-      print('pruebasss12');
       await file.writeAsBytes(await pdf.save());
-      print('pruebando');
       print('PDF Guardado en ${file.path}');
     } catch (e) {
       print("Error al guardar PDF: $e");
@@ -68,10 +64,21 @@ class _FotoAPdfAppState extends State<FotoAPdfApp> {
             ? Text('No se ha seleccionado ninguna imagen.')
             : Image.memory(_imagenWeb!),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: getImage,
-        tooltip: 'Capturar Imagen',
-        child: Icon(Icons.add_a_photo),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            onPressed: () => getImage(ImageSource.camera),
+            tooltip: 'Tomar Foto',
+            child: Icon(Icons.camera_alt),
+          ),
+          SizedBox(height: 16),
+          FloatingActionButton(
+            onPressed: () => getImage(ImageSource.gallery),
+            tooltip: 'Seleccionar de la Galería',
+            child: Icon(Icons.photo_library),
+          ),
+        ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
