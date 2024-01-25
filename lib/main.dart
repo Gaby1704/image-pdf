@@ -6,6 +6,7 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 void main() {
   runApp(MaterialApp(home: FotoAPdfApp()));
@@ -47,9 +48,30 @@ class _FotoAPdfAppState extends State<FotoAPdfApp> {
       final file = File("${directory!.path}/DocumetosAcuses/imagen.pdf");
       await file.create(recursive: true);
       await file.writeAsBytes(await pdf.save());
+
+      Fluttertoast.showToast(
+        msg: 'PDF generado con éxito\nUbicación: ${file.path}',
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.green,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+
       print('PDF Guardado en ${file.path}');
     } catch (e) {
       print("Error al guardar PDF: $e");
+
+      Fluttertoast.showToast(
+        msg: 'Error al generar el PDF',
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
     }
   }
 
@@ -85,6 +107,8 @@ class _FotoAPdfAppState extends State<FotoAPdfApp> {
   }
 }
 
+//Esta parte es para sitio web
+//
 // import 'dart:typed_data';
 // import 'dart:html' as html;
 // import 'dart:convert';
